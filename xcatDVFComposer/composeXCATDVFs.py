@@ -50,7 +50,7 @@ class DVFComposer(object):
         outDVF = surrValAP * self.niiCompAP.get_fdata() + surrValSI * self.niiCompSI.get_fdata() + self.niiCompOffset.get_fdata()
         
         # Generate the nifti output image
-        outNii = nib.Nifti2Image( outDVF, self.niiCompAP.affine )
+        outNii = nib.Nifti1Image( outDVF, self.niiCompAP.affine, self.niiCompAP.header )
         
         return outNii
         
@@ -75,9 +75,6 @@ if __name__ == '__main__':
     # Consider the value that was used when fitting the motion model 
     apVal = 5.3
     siVal = -12.4
-    curDVF  = dvfComp.getDVFFromAPandSISurrogates( apVal, siVal  )
-    
-    # Test if the second call is faster...
     curDVF  = dvfComp.getDVFFromAPandSISurrogates( apVal, siVal  )
     
     nib.save( curDVF, outDVFImgName )
