@@ -28,7 +28,7 @@ which are available in the release files of this repository. In addition, the an
 and the log file to make the simulation reproducible with the XCAT phantom. The image represents the anatomy for an 
 AP-value of 8.80 and an SI-value of -34.88. 
 
-To generate a DVF for any other AP/SI value, use the files and the code as follows:
+To generate a DVF for any other AP/SI value use the files and the code as follows:
 ```python
 import nibabel as nib
 # Define where to find the images
