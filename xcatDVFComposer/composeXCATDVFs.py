@@ -1,8 +1,9 @@
+# Imports
 import nibabel as nib
 
+
 class DVFComposer(object):
-    
-    
+
     def __init__( self, 
                   dvfCompAP_niftiImageFileName, 
                   dvfCompSI_niftiImageFileName, 
@@ -17,14 +18,14 @@ class DVFComposer(object):
         
         # Load the image information
         try:
-            self.niiCompAP     = nib.load( dvfCompAP_niftiImageFileName )
-            self.niiCompSI     = nib.load( dvfCompSI_niftiImageFileName )
+            self.niiCompAP = nib.load( dvfCompAP_niftiImageFileName )
+            self.niiCompSI = nib.load( dvfCompSI_niftiImageFileName )
             self.niiCompOffset = nib.load( dvfCompOffset_niftiImageFileName )
         
         except:
             print( "Could not load nifti files." )
-            self.niiCompAP     = None
-            self.niiCompSI     = None
+            self.niiCompAP = None
+            self.niiCompSI = None
             self.niiCompOffset = None
         
         
@@ -42,7 +43,7 @@ class DVFComposer(object):
         '''
         
         # Make sure all data was loaded correctly
-        if (self.niiCompAP == None) or (self.niiCompSI == None) or (self.niiCompOffset == None) :
+        if (self.niiCompAP is None) or (self.niiCompSI is None) or (self.niiCompOffset is None):
             print( "Model components not available. Exiting here. " )
             return
         
@@ -54,29 +55,24 @@ class DVFComposer(object):
         
         return outNii
         
-        
-        
-        
-    
-    
+
+
 if __name__ == '__main__':
     
     # Define where to find the images
-    apImgName     = 'Q:/Data/ICR/XCAT/2019_10/DVF/motionModelFromDVF/modelComp_ap.nii.gz'
-    siImgName     = 'Q:/Data/ICR/XCAT/2019_10/DVF/motionModelFromDVF/modelComp_si.nii.gz'
-    offsetImgName = 'Q:/Data/ICR/XCAT/2019_10/DVF/motionModelFromDVF/modelComp_offest.nii.gz'
+    apImgName = './modelComp_ap.nii.gz'
+    siImgName = './modelComp_si.nii.gz'
+    offsetImgName = './modelComp_offest.nii.gz'
     
-    outDVFImgName = 'Q:/Data/ICR/XCAT/2019_10/DVF/motionModelFromDVF/testOutDVF.nii.gz'
+    outDVFImgName = './testOutDVF00.nii.gz'
     
     # Generate the DVF composer (assuming simple linear model for now)
     dvfComp = DVFComposer (apImgName, siImgName, offsetImgName )
     
     # Generate a DVF corresponding to the given surrogate signal values
     # Consider the value that was used when fitting the motion model 
-    apVal = 5.3
-    siVal = -12.4
-    curDVF  = dvfComp.getDVFFromAPandSISurrogates( apVal, siVal  )
+    apVal = 8.8
+    siVal = -34.88
+    curDVF = dvfComp.getDVFFromAPandSISurrogates( apVal, siVal )
     
     nib.save( curDVF, outDVFImgName )
-    pass
-    
